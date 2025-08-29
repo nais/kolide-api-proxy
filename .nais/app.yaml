@@ -10,6 +10,10 @@ spec:
   port: 8080
   ingresses:
     - https://kolide-api-proxy.intern.nav.no
+  accessPolicy:
+    outbound:
+      external:
+        - k2.kolide.com
   replicas:
     max: 1
     min: 1
