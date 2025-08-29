@@ -3,6 +3,9 @@ on: push
 permissions:
   contents: read
   id-token: write
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   checks:
     name: Run checks
