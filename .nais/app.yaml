@@ -1,0 +1,28 @@
+apiVersion: nais.io/v1alpha1
+kind: Application
+metadata:
+  name: kolide-api-proxy
+  namespace: nais
+  labels:
+    team: nais
+spec:
+  image: {{ image }}
+  port: 8080
+  ingresses:
+    - https://kolide-api-proxy.intern.nav.no
+  replicas:
+    max: 1
+    min: 1
+  liveness:
+    path: /healthz
+  readiness:
+    path: /healthz
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 200m
+      memory: 256Mi
+  envFrom:
+    - secret: kolide-api-proxy
