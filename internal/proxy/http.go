@@ -11,10 +11,10 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
-func runHTTPServer(ctx context.Context, cache *cache.Cache, listenAddr string, proxyApiToken string, log logrus.FieldLogger) error {
+func runHTTPServer(ctx context.Context, cache *cache.Cache, listenAddr string, username, password []byte, log logrus.FieldLogger) error {
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /healthz", func(http.ResponseWriter, *http.Request) {})
-	mux.Handle("GET /api/devices", auth(proxyApiToken, apiDevices(cache)))
+	mux.Handle("GET /api/devices", auth(username, password, apiDevices(cache)))
 
 	srv := &http.Server{
 		Addr:              listenAddr,

@@ -8,7 +8,8 @@ import (
 
 type Config struct {
 	KolideApiToken string `env:"KOLIDE_API_TOKEN,required"`
-	ProxyApiToken  string `env:"PROXY_API_TOKEN,required"`
+	ProxyUsername  []byte `env:"PROXY_USERNAME,required"`
+	ProxyPassword  []byte `env:"PROXY_PASSWORD,required"`
 	ListenAddress  string `env:"HTTP_LISTEN_ADDRESS,default=0.0.0.0:8080"`
 	LogLevel       string `env:"PROXY_LOG_LEVEL,default=info"`
 }

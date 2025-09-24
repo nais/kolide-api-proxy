@@ -1,6 +1,7 @@
 package proxy
 
 import (
+	"crypto/subtle"
 	"encoding/json"
 	"net/http"
 
@@ -13,9 +14,11 @@ type response struct {
 	LastModified string          `json:"last_modified,omitempty"`
 }
 
-func auth(token string, next http.Handler) http.Handler {
+func auth(username, password []byte, next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
-		if req.Header.Get("Authorization") != "Bearer "+token {
+		u, p, ok := req.BasicAuth()
+		if !ok || subtle.ConstantTimeCompare([]byte(u), username) != 1 || subtle.ConstantTimeCompare([]byte(p), password) != 1 {
+			w.Header().Set("WWW-Authenticate", `Basic realm="Kolide API Proxy"`)
 			http.Error(w, http.StatusText(http.StatusUnauthorized), http.StatusUnauthorized)
 			return
 		}

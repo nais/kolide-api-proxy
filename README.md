@@ -19,6 +19,24 @@ Install tools using [mise](https://mise.jdx.dev/):
 mise install
 ```
 
+### Copy environment variables
+
+Create a copy of the example environment file and adjust as needed:
+
+```bash
+cp .env.example .env
+```
+
+### Run the application
+
+Run the application to start the HTTP server:
+
+```bash
+go run main.go
+```
+
+Point your HTTP client of choice to `http://localhost:8080/api/devices` (or the `HTTP_LISTEN_ADDRESS` you have specified in your `.env` file), authenticate using `username:password` (or the `PROXY_USERNAME:PROXY_PASSWORD` combination you have specified in your `.env` file) to view devices.
+
 ### Run tasks
 
 Run `mise run` to see all available tasks. These are some of the most common ones used for local development:

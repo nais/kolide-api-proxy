@@ -64,7 +64,7 @@ func run(ctx context.Context, cfg *Config, log logrus.FieldLogger) error {
 	})
 
 	eg.Go(func() error {
-		return runHTTPServer(ctx, c, cfg.ListenAddress, cfg.ProxyApiToken, log.WithField("component", "http"))
+		return runHTTPServer(ctx, c, cfg.ListenAddress, cfg.ProxyUsername, cfg.ProxyPassword, log.WithField("component", "http"))
 	})
 
 	<-ctx.Done()
