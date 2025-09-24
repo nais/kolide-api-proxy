@@ -1,6 +1,7 @@
 package kolide
 
 import (
+	"cmp"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -16,6 +17,7 @@ import (
 type Device struct {
 	Name       string    `json:"name"`
 	LastSeenAt time.Time `json:"last_seen_at"`
+	EnrolledAt time.Time `json:"enrolled_at"`
 	Serial     string    `json:"serial"`
 }
 
@@ -84,7 +86,15 @@ func (c *Client) GetDevices(ctx context.Context) ([]Device, error) {
 	}
 
 	slices.SortStableFunc(devices, func(a, b Device) int {
-		return b.LastSeenAt.Compare(a.LastSeenAt)
+		if c := b.LastSeenAt.Compare(a.LastSeenAt); c != 0 {
+			return c
+		}
+
+		if c := cmp.Compare(a.Name, b.Name); c != 0 {
+			return c
+		}
+
+		return cmp.Compare(a.Serial, b.Serial)
 	})
 
 	return devices, nil

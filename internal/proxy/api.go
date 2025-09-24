@@ -32,7 +32,7 @@ func apiDevices(c *cache.Cache) http.Handler {
 		devices := c.GetDevices()
 		if len(devices) == 0 {
 			w.Header().Set("Retry-After", "30")
-			http.Error(w, "data not available, try again later", http.StatusServiceUnavailable)
+			http.Error(w, http.StatusText(http.StatusServiceUnavailable)+": data not yet available, try again later", http.StatusServiceUnavailable)
 			return
 		}
 
