@@ -33,7 +33,7 @@ type Client struct {
 	httpClient *httpClient
 }
 
-func NewClient(apiToken string, logger logrus.FieldLogger) *Client {
+func NewClient(apiToken string, _ logrus.FieldLogger) *Client {
 	retryClient := retryablehttp.NewClient()
 	retryClient.Logger = nil
 	retryClient.RequestLogHook = func(_ retryablehttp.Logger, req *http.Request, attempt int) {
@@ -44,7 +44,7 @@ func NewClient(apiToken string, logger logrus.FieldLogger) *Client {
 	}
 
 	return &Client{
-		baseUrl: "https://k2.kolide.com/api/v0",
+		baseUrl: "https://api.kolide.com",
 		httpClient: &httpClient{
 			retryClient: retryClient,
 			apiToken:    apiToken,
