@@ -52,6 +52,9 @@ jobs:
     if: github.ref == 'refs/heads/main'
     name: Deploy application
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     needs:
       - build
     steps:
