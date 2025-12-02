@@ -37,19 +37,10 @@ func NewClient(apiToken string, logger logrus.FieldLogger) *Client {
 	retryClient := retryablehttp.NewClient()
 	retryClient.Logger = nil
 	retryClient.RequestLogHook = func(_ retryablehttp.Logger, req *http.Request, attempt int) {
-		logger.WithFields(logrus.Fields{
-			"url":     req.URL.String(),
-			"attempt": attempt + 1,
-		}).Debug("Sending request")
+		// add request logging if necessary
 	}
 	retryClient.ResponseLogHook = func(_ retryablehttp.Logger, resp *http.Response) {
-		if resp.StatusCode == http.StatusOK {
-			return
-		}
-
-		logger.
-			WithField("status", resp.Status).
-			Debug("unexpected status code")
+		// add response logging if necessary
 	}
 
 	return &Client{
