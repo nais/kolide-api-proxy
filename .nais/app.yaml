@@ -13,7 +13,7 @@ spec:
   accessPolicy:
     outbound:
       external:
-        - host: k2.kolide.com
+        - host: api.kolide.com
   replicas:
     max: 1
     min: 1
