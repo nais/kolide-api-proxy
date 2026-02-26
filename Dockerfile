@@ -4,7 +4,7 @@ WORKDIR /src
 COPY go.* ./
 RUN go mod download
 COPY . .
-RUN go build -o ./bin/proxy main.go
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o ./bin/proxy main.go
 
 FROM scratch
 ADD https://curl.haxx.se/ca/cacert.pem /etc/ssl/certs/ca-certificates.crt
